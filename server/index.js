@@ -65,16 +65,19 @@ app.get("/merge", async (req, res) => {
 app.get("/verify", (req, res) => {
     const { hash } = req.query;
     const isExist = fs.existsSync(`server/uploads/${hash}`);
+    const isExistFile = fs.existsSync(`server/${hash}`);
     if (!isExist) {
         return res.json({
             success: true,
             files: [],
+            isExist: isExistFile,
         })
     }
     const files = fs.readdirSync(`server/uploads/${hash}`);
     res.json({
         success: true,
         files,
+        isExist: isExistFile,
     })
 })
 
